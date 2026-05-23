@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moradia Digna - Campanha</title>
+  <style>
+    :root {
+      --cor-principal: #2a7ae2;
+      --fundo: #f7f7f7;
+      --texto: #333;
+      --branco: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background: var(--fundo);
+    }
+    .site-header {
+      padding: 1rem;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-header h1 { font-size: 1.1rem; margin: 0; }
+    nav button { 
+      background: none; 
+      border: none; 
+      margin-right: 1rem; 
+      color: #333; 
+      cursor: pointer; 
+      font-size: 1rem;
+      padding: 0;
+    }
+    nav button:hover { text-decoration: underline; }
+    .container { padding: 1.25rem; max-width: 1000px; margin: 0 auto; }
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+    .intro { text-align: center; }
+    .imagens { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    .imagens img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; background: #ddd; }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
+      background: var(--cor-principal);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.75rem;
+      font-size: 1rem;
+    }
+    .terms { line-height: 1.5; }
+    .inline-form { display: inline-block; margin-top: 1rem; }
+    .donation-form-wrap { display: block; padding: 1rem; }
+    label { display: block; margin-top: 0.75rem; }
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 0.25rem;
+    }
+    .agradecimento { background: #fff; padding: 1rem; border-radius: 6px; border: 1px solid #eee; margin-top: 1rem; }
+    .pix-block { display: inline-block; padding: 0.5rem; border: 1px solid #eee; border-radius: 6px; background: #fafafa; margin-top: 0.5rem; }
+    .site-footer { text-align: center; padding: 1rem; color: #666; font-size: 0.9rem; }
+    @media (max-width: 600px) {
+      .imagens img { height: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <h1>Moradia Digna, Vidas Transformadas</h1>
+    <nav>
+      <button onclick="navegarPara('inicio')">Início</button>
+      <button onclick="navegarPara('doar')">Doe</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    
+    <!-- PÁGINA 1: INÍCIO -->
+    <section id="sec-inicio" class="page-section active intro">
+      <h2>Moradia digna para todos</h2>
+      <p>Moradia precária não pode ser destino. Nossa missão é promover moradias seguras, acessíveis e estáveis, onde cada família possa viver com dignidade.</p>
+
+      <div class="versiculo">
+        <strong>Versículo da Campanha da Fraternidade</strong>
+        <p>"Mas o meu povo morará em moradas tranquilas, em habitações seguras e em repousos silenciosos."</p>
+      </div>
+
+      <div class="imagens">
+        <img src="imagem1.jpg" alt="Família em casa segura" />
+        <img src="imagem2.jpg" alt="Murado, abrigo comunitário" />
+        <img src="imagem3.jpg" alt="Crianças em área de convivência" />
+      </div>
+
+      <button class="btn" onclick="navegarPara('termos')" aria-label="Apoie essa causa">Apoie essa causa</button>
+    </section>
+
+    <!-- PÁGINA 2: TERMOS -->
+    <section id="sec-termos" class="page-section terms">
+      <h2>Termos de Utilização e Transparência</h2>
+      <p>Esta campanha está em desenvolvimento para validação de impacto e transparência. Informamos que:</p>
+      <ul>
+        <li>As informações apresentadas nesta página são de natureza informativa e estão sujeitas a alterações.</li>
+        <li>A doação pode levar algum tempo para chegar à instituição destinatária, dependendo de etapas administrativas e de conformidade.</li>
+        <li>10% do valor destinado pode ser utilizado para custos operacionais, com o objetivo de sustentar a campanha, comunicação e transparência.</li>
+        <li>Enquanto a campanha estiver em desenvolvimento, a confirmação de recebimento pode não ocorrer de imediato.</li>
+      </ul>
+      <p>Ao prosseguir, você reconhece que está apoiando uma causa com objetivo social, com dados de transparência compartilhados periodicamente.</p>
+
+      <form id="ack-form" class="inline-form" onsubmit="return processarTermos(event);">
+        <label>
+          <input type="checkbox" id="terms-checkbox" required />
+          Li e concordo com os Termos de Utilização
+        </label>
+        <br/>
+        <button type="submit" class="btn">Avançar</button>
+      </form>
+    </section>
+
+    <!-- PÁGINA 3: DOAÇÃO E FORMULÁRIO -->
+    <section id="sec-doar" class="page-section donation-form-wrap">
+      <h2>Faça Sua Doação</h2>
+      
+      <form id="donation-form" onsubmit="return processarDoacao(event);">
+        <label for="nome-completo">Nome completo do Doador</label>
+        <input type="text" id="nome-completo" required />
+
+        <label for="valor-doacao">Quantia a Doar (R$)</label>
+        <input type="number" id="valor-doacao" min="1" step="0.01" required />
+
+        <button type="submit" class="btn">Concluir Doação</button>
+      </form>
+
+      <!-- BLOCO DE AGRADECIMENTO E PIX (Oculto inicialmente) -->
+      <div class="agradecimento" id="agradecimento" aria-live="polite" style="display:none;">
+        <h2>Obrigado pela sua doação!</h2>
+        <p>Sua contribuição ajudará a promover moradia digna para famílias que precisam. Abaixo está o PIX para confirmação de pagamento:</p>
+
+        <div class="pix-block">
+          <p><strong>Chave PIX:</strong> 11922441929</p>
+          <button id="copiar-pix" class="btn" type="button" onclick="copiarChave()">Copiar chave PIX</button>
+        </div>
+
+        <p>Se preferir, você pode escanear o QR code abaixo (falso neste protótipo):</p>
+        <img src="pix-qr-placeholder.png" alt="QR code PIX" width="240" height="240" />
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Moradia Digna. Todo apoio faz a diferença.</p>
+  </footer>
+
+  <script>
+    // Sistema de navegação simples entre as seções internas
+    function navegarPara(secaoId) {
+      // Oculta todas as seções
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Se voltar para a tela de doar, reseta o formulário para o estado padrão
+      if (secaoId === 'doar') {
+        document.getElementById('donation-form').style.display = 'block';
+        document.getElementById('agradecimento').style.display = 'none';
+      }
+
+      // Mostra a seção desejada
+      document.getElementById('sec-' + secaoId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Validação da página de termos
+    function processarTermos(e) {
+      e.preventDefault();
+      const checked = document.getElementById('terms-checkbox').checked;
+      if (!checked) {
+        alert('Por favor, leia e concorde com os Termos de Utilização para prosseguir.');
+        return false;
+      }
+      navegarPara('doar');
+      return false;
+    }
+
+    // Processamento do formulário de doação
+    function processarDoacao(e) {
+      e.preventDefault();
+      const nome = document.getElementById('nome-completo').value.trim();
+      const valor = document.getElementById('valor-doacao').value;
+      
+      if (!nome || !valor || parseFloat(valor) <= 0) {
+        alert('Por favor preencha seu nome e a quantia de doação.');
+        return false;
+      }
+      
+      // Alterna a exibição interna da tela de doação
+      document.getElementById('donation-form').style.display = 'none';
+      document.getElementById('agradecimento').style.display = 'block';
+      return false;
+    }
+
+    // Função para copiar a chave PIX
+    function copiarChave() {
+      const key = '11922441929';
+      navigator.clipboard.writeText(key).then(function() {
+        alert('Chave PIX copiada para a área de transferência!');
+      }, function(err) {
+        alert('Não foi possível copiar a chave. Copie manualmente: ' + key);
+      });
+    }
+  </script>
+</body>
+</html>
